@@ -20,3 +20,14 @@ export interface ResponseProducts {
   skip: number;
   limit: number;
 }
+export type Category = "all" | "title" | "brand" | "description";
+export interface PageOptions {
+  limit: number;
+  skip: number;
+  searchText: string;
+  category: Category;
+}
+export interface SearchOptions {
+  search: string;
+  category: Category;
+}

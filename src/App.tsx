@@ -1,5 +1,5 @@
 import ProductList from "@components/contents/ProductList";
-import OptionBar from "@components/option-bar/OptionBar";
+import OptionBar from "@components/OptionBar";
 import { useState } from "react";
 import { SearchOptions } from "./type/product";
 import styles from "@styles/App.module.css";

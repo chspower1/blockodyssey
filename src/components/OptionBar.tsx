@@ -1,6 +1,6 @@
 import { Category, SearchOptions } from "@type/product";
-import React, { useState } from "react";
-
+import { useState } from "react";
+import styles from "@styles/OptionBar.module.css";
 interface OptionBarProps {
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
 }
@@ -14,9 +14,8 @@ const OptionBar = ({ setSearchOptions }: OptionBarProps) => {
   };
 
   return (
-    <header>
+    <header className={styles.Wrapper}>
       <h3>상품 검색</h3>
-      <div />
       <form onSubmit={handleSubmitSearchOptions}>
         <div>검색</div>
         <select name="select" onChange={(e) => setCategory(e.currentTarget.value as Category)}>

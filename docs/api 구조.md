@@ -1,8 +1,4 @@
-# BlockOdyssey Coding Test
-
-프론트엔드 지원자 조호성, 블록오디세이 코딩 테스트입니다.
-
-### Api 구조
+# Api 구조
 
 dummyJSON에서 제공하는 검색 기능은 title,description안에서 검색하는 조건으로 한정되어 있음,
 
@@ -36,4 +32,4 @@ controller.searchProducts = ({ limit, skip, select, q: searchQuery }) => {
 };
 ```
 
-브랜드와 카테고리를 포함하는 검색조건을 만족시키려면 모든 데이터를 받고 프론트단에서 페이지네이션하는게 불가피해 보임.
+브랜드와 카테고리를 포함하는 검색조건을 만족시키려면 프론트단에서 페이지네이션하는게 불가피해 보임.

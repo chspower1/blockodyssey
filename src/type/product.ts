@@ -33,5 +33,5 @@ export interface SearchOptions {
 }
 export interface ResultProducts {
   total: number;
-  products: Product[];
+  products: Product[] | null;
 }

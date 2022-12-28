@@ -5,8 +5,8 @@
             "@components/*": [
                 "src/components/*"
             ],
-            "@style/*": [
-                "src/style/*"
+            "@styles/*": [
+                "src/styles/*"
             ],
             "@api/*": [
                 "src/api/*"

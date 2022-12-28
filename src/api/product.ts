@@ -1,10 +1,11 @@
 interface getProductsProps {
   limit: number;
   skip: number;
+  search: string;
 }
-export const getProducts = async ({ limit, skip }: getProductsProps) => {
+export const getProducts = async ({ limit, skip, search }: getProductsProps) => {
   const result = await (
-    await fetch(`https://dummyjson.com/products?limit=${limit}&skip=${skip}`)
+    await fetch(`https://dummyjson.com/products/search?q=${search}&limit=${limit}&skip=${skip}`)
   ).json();
   return result;
 };

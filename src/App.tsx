@@ -1,14 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import "./App.css";
+import Item from "./components/contents/Item";
 
 type Image = string;
 interface Product {
+  id: number;
   brand: string;
   category: string;
   description: string;
   discountPercentage: number;
-  id: number;
   images: Image[];
   price: number;
   rating: number;
@@ -27,7 +28,7 @@ const App = () => {
     const result = await (await fetch("https://dummyjson.com/products?limit=30")).json();
     return result;
   };
-  const { data: products, isLoading } = useQuery<ResponseProducts>(["products"], getProducts, {
+  const { data, isLoading } = useQuery<ResponseProducts>(["products"], getProducts, {
     onSuccess(data) {
       console.log(data);
     },
@@ -58,7 +59,18 @@ const App = () => {
           <p>평점</p>
           <p>재고</p>
         </header>
-        {/* {products.map()} */}
+        {data &&
+          data.products.map(({ id, title, brand, description, price, rating, stock }) => (
+            <Item
+              brand={brand}
+              id={id}
+              title={title}
+              description={description}
+              price={price}
+              score={rating}
+              stock={stock}
+            />
+          ))}
       </div>
     </div>
   );

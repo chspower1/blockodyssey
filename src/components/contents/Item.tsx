@@ -1,5 +1,5 @@
 interface ItemProps {
-  number: number;
+  id: number;
   title: string;
   brand: string;
   description: string;
@@ -7,10 +7,16 @@ interface ItemProps {
   score: number;
   stock: number;
 }
-const Item = ({ number, title, brand, description, price, score, stock }: ItemProps) => {
+const Item = ({ id, title, brand, description, price, score, stock }: ItemProps) => {
   return (
     <div>
-      <p></p>
+      <p>{id}</p>
+      <p>{title}</p>
+      <p>{brand}</p>
+      <p>{description}</p>
+      <p>{price}</p>
+      <p>{score}</p>
+      <p>{stock}</p>
     </div>
   );
 };

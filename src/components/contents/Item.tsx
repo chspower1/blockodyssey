@@ -9,13 +9,19 @@ interface ItemProps {
   stock: number;
 }
 
+const cutDownText = (description: string) => {
+  if (description.length > 40) {
+    return description.slice(0, 40) + "...";
+  }
+  return description;
+};
 const Item = ({ id, title, brand, description, price, score, stock }: ItemProps) => {
   return (
     <div className={styles.Wrapper}>
       <p className={styles.Id}>{id}</p>
       <p className={styles.Title}>{title}</p>
       <p className={styles.Brand}>{brand}</p>
-      <p className={styles.Description}>{description}</p>
+      <p className={styles.Description}>{cutDownText(description)}</p>
       <p className={styles.Price}>{price}</p>
       <p className={styles.Score}>{score}</p>
       <p className={styles.Stock}>{stock}</p>

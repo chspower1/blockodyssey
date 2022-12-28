@@ -1,29 +1,47 @@
 import Item from "./Item";
 import ListHeader from "./ListHeader";
-import type { ResponseProducts } from "@type/product";
+import type { Category, ResponseProducts, SearchOptions } from "@type/product";
 import { getProducts } from "@api/product";
 import { useQuery } from "@tanstack/react-query";
-import { PageOptions } from "src/App";
 import { useState } from "react";
+import { useEffect } from "react";
 
 interface ProductListProps {
-  pageOptions: PageOptions;
-  setPageOptions: React.Dispatch<React.SetStateAction<PageOptions>>;
+  searchOptions: SearchOptions;
 }
 
-const ProductList = () => {
+const ProductList = ({ searchOptions: { search, category } }: ProductListProps) => {
   const [postPerPage, setPostPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
-
+  const [maxPage, maxPageArray] = useState(0);
   const { data } = useQuery<ResponseProducts>(
     [
       `products`,
       `limit=${postPerPage}`,
       `skip=${postPerPage * currentPage}`,
       `page=${currentPage}`,
+      `searchText=${search}`,
+      `category=${category}`,
     ],
-    () => getProducts({ limit: postPerPage, skip: postPerPage * currentPage })
+    () => getProducts({ limit: postPerPage, skip: postPerPage * currentPage, search }),
+    {
+      onSuccess(data) {
+        console.log("fetch", data.total / postPerPage);
+        maxPageArray(Math.ceil(data.total / postPerPage));
+      },
+    }
   );
+  const handleClickPageButton = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleChangePostPerPage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setPostPerPage(parseInt(e.currentTarget.value));
+  };
+  useEffect(() => {
+    setCurrentPage(0);
+    console.log("ProductList render");
+  }, [search, category]);
   return (
     <>
       <div>검색된 데이터 : {data?.total}</div>
@@ -42,18 +60,22 @@ const ProductList = () => {
         ))}
       <div>
         페이지 당 행 :
-        <select onChange={(e) => setPostPerPage(parseInt(e.currentTarget.value))}>
+        <select onChange={handleChangePostPerPage}>
           <option value={10}>10</option>
           <option value={20}>20</option>
           <option value={50}>50</option>
         </select>
         {data && (
           <div>
-            {Array.from({ length: data?.total / postPerPage }, (_, index) => index).map(
-              (page: number) => (
-                <button onClick={() => setCurrentPage(page)}>{page + 1}</button>
-              )
-            )}
+            {Array.from({ length: maxPage }, (_, index) => index).map((page) => (
+              <button
+                key={page}
+                style={currentPage === page ? { backgroundColor: "red" } : {}}
+                onClick={() => handleClickPageButton(page)}
+              >
+                {page + 1}
+              </button>
+            ))}
           </div>
         )}
       </div>

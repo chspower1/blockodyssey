@@ -1,3 +1,4 @@
+import "@style/Item.css";
 interface ItemProps {
   id: number;
   title: string;
@@ -7,9 +8,10 @@ interface ItemProps {
   score: number;
   stock: number;
 }
+
 const Item = ({ id, title, brand, description, price, score, stock }: ItemProps) => {
   return (
-    <div>
+    <div className="ItemWrapper">
       <p>{id}</p>
       <p>{title}</p>
       <p>{brand}</p>

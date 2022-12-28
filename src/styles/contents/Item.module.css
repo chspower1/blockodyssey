@@ -1,0 +1,31 @@
+.Wrapper {
+  width: 100%;
+  display: flex;
+}
+.Wrapper > p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Id {
+  width: 10%;
+}
+.Title {
+  width: 15%;
+}
+.Brand {
+  width: 15%;
+}
+.Description {
+  width: 40%;
+}
+.Price {
+  width: 10%;
+}
+.Score {
+  width: 10%;
+}
+.Stock {
+  width: 10%;
+}

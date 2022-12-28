@@ -5,7 +5,7 @@ import { getProducts } from "@api/product";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useEffect } from "react";
-
+import styles from "@styles/contents/ProductList.module.css";
 interface ProductListProps {
   searchOptions: SearchOptions;
 }
@@ -51,8 +51,9 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
     setCurrentPage(0);
     console.log("ProductList render");
   }, [search, category]);
+
   return (
-    <>
+    <div className={styles.Wrapper}>
       <div>검색된 데이터 : {resultProducts?.total}</div>
       <ListHeader />
       {resultProducts &&
@@ -88,7 +89,7 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 export default ProductList;

@@ -1,4 +1,4 @@
-import "@style/Item.css";
+import styles from "@styles/contents/Item.module.css";
 interface ItemProps {
   id: number;
   title: string;
@@ -11,14 +11,14 @@ interface ItemProps {
 
 const Item = ({ id, title, brand, description, price, score, stock }: ItemProps) => {
   return (
-    <div className="ItemWrapper">
-      <p>{id}</p>
-      <p>{title}</p>
-      <p>{brand}</p>
-      <p>{description}</p>
-      <p>{price}</p>
-      <p>{score}</p>
-      <p>{stock}</p>
+    <div className={styles.Wrapper}>
+      <p className={styles.Id}>{id}</p>
+      <p className={styles.Title}>{title}</p>
+      <p className={styles.Brand}>{brand}</p>
+      <p className={styles.Description}>{description}</p>
+      <p className={styles.Price}>{price}</p>
+      <p className={styles.Score}>{score}</p>
+      <p className={styles.Stock}>{stock}</p>
     </div>
   );
 };

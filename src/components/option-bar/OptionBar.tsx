@@ -12,6 +12,7 @@ const OptionBar = ({ setSearchOptions }: OptionBarProps) => {
     e.preventDefault();
     setSearchOptions({ category, search });
   };
+
   return (
     <header>
       <h3>상품 검색</h3>

@@ -1,6 +1,6 @@
 import Item from "./Item";
 import ListHeader from "./ListHeader";
-import type { Category, ResponseProducts, SearchOptions } from "@type/product";
+import type { Category, ResponseProducts, ResultProducts, SearchOptions } from "@type/product";
 import { getProducts } from "@api/product";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -14,6 +14,7 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
   const [postPerPage, setPostPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
   const [maxPage, maxPageArray] = useState(0);
+  const [resultProducts, setResultProducts] = useState<ResultProducts>();
   const { data } = useQuery<ResponseProducts>(
     [
       `products`,
@@ -25,9 +26,17 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
     ],
     () => getProducts({ limit: postPerPage, skip: postPerPage * currentPage, search }),
     {
-      onSuccess(data) {
-        console.log("fetch", data.total / postPerPage);
-        maxPageArray(Math.ceil(data.total / postPerPage));
+      onSuccess({ total, products }) {
+        let resultTotal;
+        if (category === "all") {
+          setResultProducts({ total, products });
+        } else {
+          const resultProducts = products.filter((product) => product[category].includes(search));
+          resultTotal = resultProducts.length;
+          setResultProducts({ products: resultProducts, total: resultTotal });
+        }
+        console.log("fetch", total / postPerPage);
+        maxPageArray(Math.ceil(total / postPerPage));
       },
     }
   );
@@ -44,10 +53,10 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
   }, [search, category]);
   return (
     <>
-      <div>검색된 데이터 : {data?.total}</div>
+      <div>검색된 데이터 : {resultProducts?.total}</div>
       <ListHeader />
-      {data &&
-        data.products.map(({ id, title, brand, description, price, rating, stock }) => (
+      {resultProducts &&
+        resultProducts.products.map(({ id, title, brand, description, price, rating, stock }) => (
           <Item
             brand={brand}
             id={id}

@@ -31,3 +31,7 @@ export interface SearchOptions {
   search: string;
   category: Category;
 }
+export interface ResultProducts {
+  total: number;
+  products: Product[];
+}

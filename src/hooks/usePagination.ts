@@ -18,7 +18,10 @@ const usePagination = () => {
 
   // 페이지 당 행 갯수 수정시
   const handleChangePostPerPage = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPage((prev) => ({ ...prev, postPerPage: parseInt(e.currentTarget.value) }));
+    console.log(e.currentTarget.value);
+    if (e.currentTarget.value) {
+      setPage((prev) => ({ ...prev, postPerPage: parseInt(e.currentTarget.value) }));
+    }
   };
 
   // 페이지섹션 이동 버튼 클릭시

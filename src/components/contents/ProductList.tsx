@@ -60,7 +60,7 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
         ))}
       <div>
         페이지 당 행 :
-        <select onChange={handleChangePostPerPage}>
+        <select onChange={(e) => handleChangePostPerPage(parseInt(e.currentTarget.value))}>
           <option value={10}>10</option>
           <option value={20}>20</option>
           <option value={50}>50</option>

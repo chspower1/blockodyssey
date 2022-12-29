@@ -6,9 +6,10 @@ const usePagination = () => {
     currentPage: 1,
     pageSection: 1,
     maxPage: 1,
+    maxLimitPage: 5,
+    minLimitPage: 1,
   });
-  const maxLimitPage = page.pageSection * 5;
-  const minLimitPage = maxLimitPage - 4;
+
   const prevProductsCount = page.postPerPage * (page.currentPage - 1);
   const currentProductsCount = page.postPerPage * page.currentPage;
   // 현재페이지 이동 시
@@ -19,25 +20,34 @@ const usePagination = () => {
   // 페이지 당 행 갯수 수정시
   const handleChangePostPerPage = (postPerPage: number) => {
     setPage((prev) => ({ ...prev, postPerPage }));
+
+    console.log(page);
   };
 
   // 페이지섹션 이동 버튼 클릭시
   const handleClickPageSection = ({ isNext }: { isNext: boolean }) => {
-    if (isNext && maxLimitPage <= page.maxPage) {
+    if (isNext && page.maxLimitPage <= page.maxPage) {
       setPage((prev) => ({ ...prev, pageSection: prev.pageSection + 1 }));
     } else if (!isNext && page.pageSection !== 1) {
       setPage((prev) => ({ ...prev, pageSection: prev.pageSection - 1 }));
     }
+    setPage((prev) => ({
+      ...prev,
+      maxLimitPage: prev.pageSection * 5,
+      minLimitPage: prev.pageSection * 5 - 4,
+    }));
   };
 
   //
   useEffect(() => {
-    if (page.currentPage > maxLimitPage) {
-      setPage((prev) => ({ ...prev, currentPage: maxLimitPage }));
-    } else if (page.currentPage < maxLimitPage) {
-      setPage((prev) => ({ ...prev, currentPage: minLimitPage }));
+    if (page.currentPage > page.maxLimitPage) {
+      setPage((prev) => ({ ...prev, currentPage: page.maxLimitPage }));
+    } else if (page.currentPage < page.maxLimitPage) {
+      setPage((prev) => ({ ...prev, currentPage: page.minLimitPage }));
     }
   }, [page.pageSection]);
+
+  useEffect(() => {}, [page.postPerPage]);
 
   return {
     page,
@@ -47,8 +57,6 @@ const usePagination = () => {
     handleClickPageButton,
     handleChangePostPerPage,
     handleClickPageSection,
-    maxLimitPage,
-    minLimitPage,
   };
 };
 export default usePagination;

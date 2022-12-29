@@ -14,14 +14,13 @@ interface ProductListProps {
 const ProductList = ({ searchOptions: { search, category } }: ProductListProps) => {
   const [resultProducts, setResultProducts] = useState<ResultProducts>();
   const {
-    page: { currentPage, maxPage, pageSection, postPerPage },
+    page: { currentPage, maxPage, pageSection, postPerPage, maxLimitPage, minLimitPage },
     setPage,
     prevProductsCount,
     currentProductsCount,
     handleClickPageButton,
     handleChangePostPerPage,
     handleClickPageSection,
-    maxLimitPage,
   } = usePagination();
 
   const { data: products } = useQuery<ResponseProducts>(["products"], getProducts);
@@ -38,7 +37,7 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
       }));
       console.log(searchedProducts);
     }
-  }, [search, category, products]);
+  }, [search, category, products, postPerPage]);
 
   return (
     <div className={styles.Wrapper}>
@@ -75,7 +74,7 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
             </button>
             {Array.from({ length: maxPage }, (_, index) => index + 1).map(
               (page) =>
-                ((page <= 5 * pageSection && page > 5 * (pageSection - 1)) || page === maxPage) && (
+                ((page <= maxLimitPage && page >= minLimitPage) || page === maxPage) && (
                   <>
                     {page === maxPage && maxLimitPage < maxPage && "..."}
                     <button

@@ -1,4 +1,11 @@
-export const getSessionStorageOrDegault = (key: string, defaultValue: string) => {
+interface GetSessionStorageOrDefaultProps<T> {
+  key: string;
+  defaultValue: T;
+}
+export const getSessionStorageOrDefault = <T>({
+  key,
+  defaultValue,
+}: GetSessionStorageOrDefaultProps<T>) => {
   const stored = sessionStorage.getItem(key);
-  return stored ? stored : defaultValue;
+  return stored ? (JSON.parse(stored) as T) : defaultValue;
 };

@@ -1,20 +1,31 @@
 import ProductList from "@components/contents/ProductList";
 import OptionBar from "@components/OptionBar";
-import { useState } from "react";
-import { SearchOptions } from "./type/product";
+import { useEffect, useState } from "react";
+import { Category, SearchOptions } from "./type/product";
 import styles from "@styles/App.module.css";
 import TopBar from "@components/TopBar";
+import { useSessionStorage } from "@hooks/useSessionStorage";
 
 const App = () => {
-  const [searchOptions, setSearchOptions] = useState<SearchOptions>({
-    search: "",
-    category: "all",
+  const [finalSearchKeyword, setFinalSearchKeyword] = useSessionStorage<string>({
+    key: "searchKeyword",
+    defaultValue: "",
   });
+  const [finalCategory, setFinalCategory] = useSessionStorage<Category>({
+    key: "category",
+    defaultValue: "all",
+  });
+
   return (
     <div className={styles.Wrapper}>
       <TopBar />
-      <OptionBar setSearchOptions={setSearchOptions} />
-      <ProductList searchOptions={searchOptions} />
+      <OptionBar
+        finalCategory={finalCategory}
+        finalSearchKeyword={finalSearchKeyword}
+        setFinalSearchKeyword={setFinalSearchKeyword}
+        setFinalCategory={setFinalCategory}
+      />
+      <ProductList searchOptions={{ search: finalSearchKeyword, category: finalCategory }} />
     </div>
   );
 };

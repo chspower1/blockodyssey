@@ -2,15 +2,24 @@ import { Category, SearchOptions } from "@type/product";
 import { useState } from "react";
 import styles from "@styles/OptionBar.module.css";
 interface OptionBarProps {
-  setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
+  finalSearchKeyword: string;
+  finalCategory: Category;
+  setFinalSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
+  setFinalCategory: React.Dispatch<React.SetStateAction<Category>>;
 }
-const OptionBar = ({ setSearchOptions }: OptionBarProps) => {
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState<Category>("all");
+const OptionBar = ({
+  finalSearchKeyword,
+  finalCategory,
+  setFinalSearchKeyword,
+  setFinalCategory,
+}: OptionBarProps) => {
+  const [search, setSearch] = useState(finalSearchKeyword);
+  const [category, setCategory] = useState<Category>(finalCategory);
 
   const handleSubmitSearchOptions = (e: React.FormEvent) => {
     e.preventDefault();
-    setSearchOptions({ category, search });
+    setFinalSearchKeyword(search);
+    setFinalCategory(category);
   };
 
   return (
@@ -19,10 +28,18 @@ const OptionBar = ({ setSearchOptions }: OptionBarProps) => {
       <form onSubmit={handleSubmitSearchOptions}>
         <div>검색</div>
         <select name="select" onChange={(e) => setCategory(e.currentTarget.value as Category)}>
-          <option value="all">전체</option>
-          <option value="title">상품명</option>
-          <option value="brand">브랜드</option>
-          <option value="description">상품내용</option>
+          <option value="all" selected={finalCategory === "all"}>
+            전체
+          </option>
+          <option value="title" selected={finalCategory === "title"}>
+            상품명
+          </option>
+          <option value="brand" selected={finalCategory === "brand"}>
+            브랜드
+          </option>
+          <option value="description" selected={finalCategory === "description"}>
+            상품내용
+          </option>
         </select>
         <input type="text" value={search} onChange={(e) => setSearch(e.currentTarget.value)} />
         <button>조회</button>

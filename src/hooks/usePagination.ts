@@ -1,3 +1,4 @@
+import { Product } from "@type/product";
 import { useEffect, useState } from "react";
 
 const usePagination = () => {
@@ -46,8 +47,6 @@ const usePagination = () => {
       setPage((prev) => ({ ...prev, currentPage: page.minLimitPage }));
     }
   }, [page.pageSection]);
-
-  useEffect(() => {}, [page.postPerPage]);
 
   return {
     page,

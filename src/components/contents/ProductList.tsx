@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import styles from "@styles/contents/ProductList.module.css";
 import { searchProducts } from "@utils/searchProducts";
 import usePagination from "@hooks/usePagination";
+import { useSessionStorage } from "@hooks/useSessionStorage";
 interface ProductListProps {
   searchOptions: SearchOptions;
 }

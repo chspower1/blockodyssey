@@ -13,6 +13,9 @@
             ],
             "@type/*": [
                 "src/type/*"
+            ],
+            "@utils/*": [
+                "src/utils/*"
             ]
         }
     }

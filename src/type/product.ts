@@ -20,7 +20,9 @@ export interface ResponseProducts {
   skip: number;
   limit: number;
 }
-export type Category = "all" | "title" | "brand" | "description";
+
+export type TargetCategory = "title" | "brand" | "description";
+export type Category = "all" | TargetCategory;
 export interface PageOptions {
   limit: number;
   skip: number;

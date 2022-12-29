@@ -21,19 +21,25 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
 
   const { data: products } = useQuery<ResponseProducts>(["products"], getProducts);
 
+  // 현재페이지 이동 시
   const handleClickPageButton = (page: number) => {
     setCurrentPage(page);
   };
 
+  // 페이지 당 행 갯수 수정시
   const handleChangePostPerPage = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setPostPerPage(parseInt(e.currentTarget.value));
   };
 
+  // 페이지섹션 이동 버튼 클릭시
   const handleClickPageSection = ({ isNext }: { isNext: boolean }) => {
     if (isNext && pageSection * 5 <= maxPage) {
       setPageSection((prev) => prev + 1);
     } else if (!isNext && pageSection !== 1) {
       setPageSection((prev) => prev - 1);
+    }
+    if (currentPage > pageSection * 5) {
+      setCurrentPage(pageSection * 5);
     }
   };
 
@@ -84,7 +90,7 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
               (page) =>
                 ((page <= 5 * pageSection && page > 5 * (pageSection - 1)) || page === maxPage) && (
                   <>
-                    {page === maxPage && "..."}
+                    {page === maxPage && pageSection * 5 < maxPage && "..."}
                     <button
                       key={page}
                       style={currentPage === page ? { backgroundColor: "red" } : {}}

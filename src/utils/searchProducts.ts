@@ -9,7 +9,7 @@ interface SearchProductsProps {
 export const searchProducts = ({ search, category, products }: SearchProductsProps) => {
   const categoryArray: TargetCategory[] = ["title", "brand", "description"];
   const resultProducts: Product[] = [];
-
+  console.log(resultProducts);
   const filterProducts = (product: Product, targetCategory: TargetCategory) =>
     product[targetCategory].toLowerCase().includes(search) && resultProducts.push(product);
 
@@ -24,7 +24,7 @@ export const searchProducts = ({ search, category, products }: SearchProductsPro
     );
     return SortToId(DedupeArray(resultProducts));
   } else {
-    products.forEach((product) => products.forEach((product) => filterProducts(product, category)));
+    products.forEach((product) => filterProducts(product, category));
     return resultProducts;
   }
 };

@@ -13,8 +13,11 @@ interface ProductListProps {
 const ProductList = ({ searchOptions: { search, category } }: ProductListProps) => {
   const [postPerPage, setPostPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [maxPage, setMaxPage] = useState(0);
   const [resultProducts, setResultProducts] = useState<ResultProducts>();
+
+  const prevProductsCount = postPerPage * (currentPage - 1);
+  const currentProductsCount = postPerPage * currentPage;
+  const maxPage = resultProducts ? Math.ceil(resultProducts.total / postPerPage) : 1;
 
   const { data: products } = useQuery<ResponseProducts>(["products"], getProducts);
 
@@ -25,11 +28,10 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
     setPostPerPage(parseInt(e.currentTarget.value));
   };
   useEffect(() => {
-    setCurrentPage(0);
+    setCurrentPage(1);
     if (products) {
       const searchedProducts = searchProducts({ category, search, products: products.products! });
       setResultProducts({ total: searchedProducts.length, products: searchedProducts });
-      setMaxPage(Math.ceil(searchedProducts.length / postPerPage));
       console.log(searchedProducts);
     }
   }, [search, category, products]);
@@ -39,7 +41,7 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
       <div>상품 수 : {resultProducts?.total}</div>
       <ListHeader />
       {resultProducts?.products
-        ?.slice(postPerPage * (currentPage - 1), postPerPage * currentPage)
+        ?.slice(prevProductsCount, currentProductsCount)
         .map(({ id, title, brand, description, price, rating, stock }) => (
           <Item
             key={id}
@@ -61,10 +63,7 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
         </select>
         {resultProducts && (
           <div>
-            {Array.from(
-              { length: Math.ceil(resultProducts.total / postPerPage) },
-              (_, index) => index + 1
-            ).map((page) => (
+            {Array.from({ length: maxPage }, (_, index) => index + 1).map((page) => (
               <button
                 key={page}
                 style={currentPage === page ? { backgroundColor: "red" } : {}}

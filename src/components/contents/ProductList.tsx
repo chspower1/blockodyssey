@@ -7,61 +7,38 @@ import { useState } from "react";
 import { useEffect } from "react";
 import styles from "@styles/contents/ProductList.module.css";
 import { searchProducts } from "@utils/searchProducts";
+import usePagination from "@hooks/usePagination";
 interface ProductListProps {
   searchOptions: SearchOptions;
 }
 const ProductList = ({ searchOptions: { search, category } }: ProductListProps) => {
-  const [postPerPage, setPostPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSection, setPageSection] = useState(1);
   const [resultProducts, setResultProducts] = useState<ResultProducts>();
-
-  const maxLimitPage = pageSection * 5;
-  const minLimitPage = maxLimitPage - 4;
-
-  const prevProductsCount = postPerPage * (currentPage - 1);
-  const currentProductsCount = postPerPage * currentPage;
-  const maxPage = resultProducts ? Math.ceil(resultProducts.total / postPerPage) : 1;
+  const {
+    page: { currentPage, maxPage, pageSection, postPerPage },
+    setPage,
+    prevProductsCount,
+    currentProductsCount,
+    handleClickPageButton,
+    handleChangePostPerPage,
+    handleClickPageSection,
+    maxLimitPage,
+  } = usePagination();
 
   const { data: products } = useQuery<ResponseProducts>(["products"], getProducts);
 
-  // 현재페이지 이동 시
-  const handleClickPageButton = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  // 페이지 당 행 갯수 수정시
-  const handleChangePostPerPage = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPostPerPage(parseInt(e.currentTarget.value));
-  };
-
-  // 페이지섹션 이동 버튼 클릭시
-  const handleClickPageSection = ({ isNext }: { isNext: boolean }) => {
-    if (isNext && maxLimitPage <= maxPage) {
-      setPageSection((prev) => prev + 1);
-    } else if (!isNext && pageSection !== 1) {
-      setPageSection((prev) => prev - 1);
-    }
-  };
-
   // 검색조건,키워드 변경시
   useEffect(() => {
-    setCurrentPage(1);
+    setPage((prev) => ({ ...prev, currentPage: 1 }));
     if (products) {
       const searchedProducts = searchProducts({ category, search, products: products.products! });
       setResultProducts({ total: searchedProducts.length, products: searchedProducts });
+      setPage((prev) => ({
+        ...prev,
+        maxPage: searchedProducts.length ? Math.ceil(searchedProducts.length / postPerPage) : 1,
+      }));
       console.log(searchedProducts);
     }
   }, [search, category, products]);
-
-  //페이지 섹션 변경시 현재페이지 변경
-  useEffect(() => {
-    if (currentPage > maxLimitPage) {
-      setCurrentPage(maxLimitPage);
-    } else if (currentPage < maxLimitPage) {
-      setCurrentPage(minLimitPage);
-    }
-  }, [pageSection]);
 
   return (
     <div className={styles.Wrapper}>

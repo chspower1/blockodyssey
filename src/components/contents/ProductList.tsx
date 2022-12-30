@@ -1,5 +1,5 @@
 import Item from "./Item";
-import ListHeader from "./ListHeader";
+import ListHeader from "./listHeader/ListHeader";
 import type { Category, ResponseProducts, ResultProducts, SearchOptions } from "@type/product";
 import { getProducts } from "@api/product";
 import { useQuery } from "@tanstack/react-query";
@@ -8,8 +8,9 @@ import { useEffect } from "react";
 import styles from "@styles/contents/ProductList.module.css";
 import { searchProducts } from "@utils/searchProducts";
 import usePagination from "@hooks/usePagination";
-import { useSessionStorage } from "@hooks/useSessionStorage";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setResultProducts } from "@store/resultProductsSlice";
+import { RootState } from "@store/store";
 interface ProductListProps {
   searchOptions: SearchOptions;
   isNew: boolean;
@@ -22,7 +23,8 @@ const ProductList = ({
   setIsNew,
 }: ProductListProps) => {
   // State
-  const [resultProducts, setResultProducts] = useState<ResultProducts>();
+  const resultProducts = useSelector((state: RootState) => state.resultProducts.value);
+  const dispatch = useDispatch();
 
   // Pagination hook
   const {
@@ -48,7 +50,7 @@ const ProductList = ({
     // 검색 조건에 맞게 products update
     if (products) {
       const searchedProducts = searchProducts({ category, search, products: products.products! });
-      setResultProducts({ total: searchedProducts.length, products: searchedProducts });
+      dispatch(setResultProducts({ total: searchedProducts.length, products: searchedProducts }));
       setPage((prev) => ({
         ...prev,
         maxPage: searchedProducts.length ? Math.ceil(searchedProducts.length / postPerPage) : 1,
@@ -59,13 +61,17 @@ const ProductList = ({
 
   return (
     <div className={styles.Wrapper}>
-      <div>상품 수 : {resultProducts?.total}</div>
-      <ListHeader setResultProducts={setResultProducts} />
+      <div>
+        <span>{`분류 : ${category}`}</span>
+        <span>{`검색어 :${search}`}</span>
+        <span>{`상품 수 :${resultProducts.total}`}</span>
+      </div>
+      <ListHeader />
       {resultProducts?.products
         ?.slice(prevProductsCount, currentProductsCount)
         .map(({ id, title, brand, description, price, rating, stock }) => (
           <Item
-            key={id}
+            key={id + title}
             brand={brand}
             id={id}
             title={title}
@@ -93,7 +99,7 @@ const ProductList = ({
             {Array.from({ length: maxPage }, (_, index) => index + 1).map(
               (page) =>
                 ((page <= maxLimitPage && page >= minLimitPage) || page === maxPage) && (
-                  <>
+                  <span key={page}>
                     {page === maxPage && maxLimitPage < maxPage && "..."}
                     <button
                       key={page}
@@ -102,7 +108,7 @@ const ProductList = ({
                     >
                       {page}
                     </button>
-                  </>
+                  </span>
                 )
             )}
             <button

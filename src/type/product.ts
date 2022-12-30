@@ -37,3 +37,4 @@ export interface ResultProducts {
   total: number;
   products: Product[] | null;
 }
+export type ProductColumn = "title" | "id" | "brand" | "description" | "price" | "rating" | "stock";

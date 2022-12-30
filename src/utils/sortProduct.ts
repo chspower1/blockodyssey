@@ -1,11 +1,14 @@
-import { Product } from "@type/product";
+import { Product, ProductColumn } from "@type/product";
 
 interface SortProductsProps {
   products: Product[];
-  option: SortOption;
+  column: ProductColumn;
+  isUpper: boolean;
 }
-type SortOption = "title" | "id" | "brand" | "description" | "price" | "rating" | "stock";
 
-export const sortProducts = ({ products, option }: SortProductsProps) => {
-  return products.sort((a, b) => (a[option] > b[option] ? 1 : -1));
+export const sortProducts = ({ products, column, isUpper }: SortProductsProps) => {
+  const sortedProducts = [...products];
+  return sortedProducts.sort((a, b) =>
+    a[column] > b[column] ? (isUpper ? 1 : -1) : isUpper ? -1 : 1
+  );
 };

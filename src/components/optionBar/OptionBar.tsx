@@ -1,8 +1,7 @@
-import { Category, SearchOptions } from "@type/product";
+import { Category } from "@type/product";
 import { SetStateAction, useState } from "react";
 import styles from "@styles/OptionBar.module.css";
 import CategorySelector from "./CategorySeletor";
-import usePagination from "@hooks/usePagination";
 interface OptionBarProps {
   setIsNew: React.Dispatch<SetStateAction<boolean>>;
   finalSearchKeyword: string;
@@ -10,7 +9,7 @@ interface OptionBarProps {
   setFinalSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
   setFinalCategory: React.Dispatch<React.SetStateAction<Category>>;
 }
-const CATEGORIES = [
+const SELECT_CATEGORIES = [
   {
     korean: "전체",
     value: "all",
@@ -52,13 +51,21 @@ const OptionBar = ({
     }
   };
 
+  const handleClickResetOption = () => {
+    setIsNew(true);
+    setFinalSearchKeyword("");
+    setFinalCategory("all");
+  };
   return (
     <header className={styles.Wrapper}>
       <h3>상품 검색</h3>
       <form onSubmit={handleSubmitSearchOptions}>
         <div>검색</div>
+        <button type="button" onClick={handleClickResetOption}>
+          전체 보기
+        </button>
         <CategorySelector
-          categories={CATEGORIES}
+          categories={SELECT_CATEGORIES}
           setCategory={setCategory}
           finalCategory={finalCategory}
         />

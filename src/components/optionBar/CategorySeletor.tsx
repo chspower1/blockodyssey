@@ -11,9 +11,13 @@ interface CategorySelectorProps {
 
 const CategorySelector = ({ categories, finalCategory, setCategory }: CategorySelectorProps) => {
   return (
-    <select name="select" onChange={(e) => setCategory(e.currentTarget.value as Category)}>
+    <select
+      name="select"
+      onChange={(e) => setCategory(e.currentTarget.value as Category)}
+      defaultValue={finalCategory}
+    >
       {categories.map((category) => (
-        <option value={category.value} selected={finalCategory === category.value}>
+        <option key={category.value} value={category.value}>
           {category.korean}
         </option>
       ))}

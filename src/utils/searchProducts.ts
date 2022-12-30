@@ -9,7 +9,7 @@ interface SearchProductsProps {
 export const searchProducts = ({ search, category, products }: SearchProductsProps) => {
   const categoryArray: TargetCategory[] = ["title", "brand", "description"];
   const resultProducts: Product[] = [];
-  console.log(resultProducts);
+
   const filterProducts = (product: Product, targetCategory: TargetCategory) =>
     product[targetCategory].toLowerCase().includes(search) && resultProducts.push(product);
 

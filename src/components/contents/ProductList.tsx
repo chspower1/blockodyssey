@@ -9,17 +9,22 @@ import styles from "@styles/contents/ProductList.module.css";
 import { searchProducts } from "@utils/searchProducts";
 import usePagination from "@hooks/usePagination";
 import { useSessionStorage } from "@hooks/useSessionStorage";
+
 interface ProductListProps {
   searchOptions: SearchOptions;
   isNew: boolean;
   setIsNew: React.Dispatch<SetStateAction<boolean>>;
 }
+
 const ProductList = ({
   searchOptions: { search, category },
   isNew,
   setIsNew,
 }: ProductListProps) => {
+  // State
   const [resultProducts, setResultProducts] = useState<ResultProducts>();
+
+  // Pagination hook
   const {
     page: { currentPage, maxPage, pageSection, postPerPage, maxLimitPage, minLimitPage },
     setPage,
@@ -30,14 +35,17 @@ const ProductList = ({
     handleClickPageSection,
   } = usePagination();
 
+  // Fetching Products Data
   const { data: products } = useQuery<ResponseProducts>(["products"], getProducts);
 
-  // 검색조건,키워드 변경시
+  // When Update SearchOptions
   useEffect(() => {
+    // 새로 검색 했을 때 페이지 1로 이동
     if (isNew) {
       setPage((prev) => ({ ...prev, currentPage: 1 }));
       setIsNew(false);
     }
+    // 검색 조건에 맞게 products update
     if (products) {
       const searchedProducts = searchProducts({ category, search, products: products.products! });
       setResultProducts({ total: searchedProducts.length, products: searchedProducts });
@@ -52,7 +60,7 @@ const ProductList = ({
   return (
     <div className={styles.Wrapper}>
       <div>상품 수 : {resultProducts?.total}</div>
-      <ListHeader />
+      <ListHeader setResultProducts={setResultProducts} />
       {resultProducts?.products
         ?.slice(prevProductsCount, currentProductsCount)
         .map(({ id, title, brand, description, price, rating, stock }) => (

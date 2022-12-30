@@ -10,7 +10,24 @@ interface OptionBarProps {
   setFinalSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
   setFinalCategory: React.Dispatch<React.SetStateAction<Category>>;
 }
-
+const CATEGORIES = [
+  {
+    korean: "전체",
+    value: "all",
+  },
+  {
+    korean: "상품명",
+    value: "title",
+  },
+  {
+    korean: "브랜드",
+    value: "brand",
+  },
+  {
+    korean: "상품내용",
+    value: "description",
+  },
+];
 const OptionBar = ({
   finalSearchKeyword,
   finalCategory,
@@ -18,27 +35,12 @@ const OptionBar = ({
   setFinalCategory,
   setIsNew,
 }: OptionBarProps) => {
-  const CATEGORIES = [
-    {
-      korean: "전체",
-      value: "all",
-    },
-    {
-      korean: "상품명",
-      value: "title",
-    },
-    {
-      korean: "브랜드",
-      value: "brand",
-    },
-    {
-      korean: "상품내용",
-      value: "description",
-    },
-  ];
+  // State
   const [search, setSearch] = useState(finalSearchKeyword);
   const [category, setCategory] = useState<Category>(finalCategory);
   const [errorMessage, setErrorMessage] = useState<string>();
+
+  // handler
   const handleSubmitSearchOptions = (e: React.FormEvent) => {
     e.preventDefault();
     if (!search) {

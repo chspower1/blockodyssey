@@ -10,6 +10,24 @@
   height: 1px;
   background-color: rgb(201, 201, 201);
 }
+.CountMessage {
+  font-size: 22px;
+  margin-left: 20px;
+}
+.CountMessage > span {
+  font-size: 16px;
+}
+.ResetBytton {
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #00a4f4;
+  color: white;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+}
+.ResetBytton:hover {
+  background-color: #128ac6;
+}
 .SearchForm {
   align-items: flex-end;
 }

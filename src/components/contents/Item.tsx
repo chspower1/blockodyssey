@@ -17,7 +17,7 @@ const cutDownText = (description: string) => {
 };
 const Item = ({ id, title, brand, description, price, rating, stock }: ItemProps) => {
   return (
-    <div className={styles.Wrapper}>
+    <div className={`${styles.Wrapper}`}>
       <p className={styles.Id}>{id}</p>
       <p className={styles.Title}>{title}</p>
       <p className={styles.Brand}>{brand}</p>

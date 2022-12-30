@@ -15,7 +15,7 @@ const CategorySelector = ({ categories, category, setCategory }: CategorySelecto
       name="select"
       className={styles.CategorySelect}
       onChange={(e) => setCategory(e.currentTarget.value as Category)}
-      defaultValue={category}
+      value={category}
     >
       {categories.map((category) => (
         <option key={category.value} value={category.value}>

@@ -38,6 +38,7 @@
 .PageButtonBox {
   width: 330px;
   gap: 10px;
+  /* justify-content: flex-start; */
 }
 .Button {
   width: 40px;

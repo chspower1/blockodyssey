@@ -108,6 +108,7 @@ section {
   display: block;
 }
 body {
+  font-size: 16px;
   font-family: "Sebang";
   line-height: 1;
   box-sizing: border-box;
@@ -134,6 +135,7 @@ table {
 button,
 select,
 input {
+  cursor: pointer;
   border: none;
   outline: none;
 }

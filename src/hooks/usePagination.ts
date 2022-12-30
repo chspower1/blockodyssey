@@ -34,9 +34,17 @@ const usePagination = () => {
   // 페이지섹션 이동 버튼 클릭시
   const handleClickPageSection = ({ isNext }: { isNext: boolean }) => {
     if (isNext && page.maxLimitPage <= page.maxPage) {
-      setPage((prev) => ({ ...prev, pageSection: prev.pageSection + 1 }));
+      setPage((prev) => ({
+        ...prev,
+        pageSection: prev.pageSection + 1,
+        currentPage: (prev.pageSection + 1) * 5 - 4,
+      }));
     } else if (!isNext && page.pageSection !== 1) {
-      setPage((prev) => ({ ...prev, pageSection: prev.pageSection - 1 }));
+      setPage((prev) => ({
+        ...prev,
+        pageSection: prev.pageSection - 1,
+        currentPage: (prev.pageSection - 1) * 5,
+      }));
     }
     setPage((prev) => ({
       ...prev,
@@ -45,13 +53,13 @@ const usePagination = () => {
     }));
   };
 
-  useEffect(() => {
-    if (page.currentPage > page.maxLimitPage) {
-      setPage((prev) => ({ ...prev, currentPage: page.maxLimitPage }));
-    } else if (page.currentPage < page.maxLimitPage) {
-      setPage((prev) => ({ ...prev, currentPage: page.minLimitPage }));
-    }
-  }, [page.pageSection]);
+  // useEffect(() => {
+  //   if (page.currentPage > page.maxLimitPage) {
+  //     setPage((prev) => ({ ...prev, currentPage: page.maxLimitPage }));
+  //   } else if (page.currentPage < page.maxLimitPage) {
+  //     setPage((prev) => ({ ...prev, currentPage: page.minLimitPage }));
+  //   }
+  // }, [page.pageSection]);
 
   useEffect(() => {
     console.log("currentSession 변경");

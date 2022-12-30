@@ -38,11 +38,16 @@ const OptionBar = ({
   ];
   const [search, setSearch] = useState(finalSearchKeyword);
   const [category, setCategory] = useState<Category>(finalCategory);
+  const [errorMessage, setErrorMessage] = useState<string>();
   const handleSubmitSearchOptions = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsNew(true);
-    setFinalSearchKeyword(search);
-    setFinalCategory(category);
+    if (!search) {
+      setErrorMessage("검색어를 입력해주세요.");
+    } else {
+      setIsNew(true);
+      setFinalSearchKeyword(search);
+      setFinalCategory(category);
+    }
   };
 
   return (
@@ -56,6 +61,7 @@ const OptionBar = ({
           finalCategory={finalCategory}
         />
         <input type="text" value={search} onChange={(e) => setSearch(e.currentTarget.value)} />
+        <div>{errorMessage && errorMessage}</div>
         <button>조회</button>
       </form>
     </header>

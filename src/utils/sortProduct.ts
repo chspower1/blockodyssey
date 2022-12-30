@@ -7,8 +7,8 @@ interface SortProductsProps {
 }
 
 export const sortProducts = ({ products, column, isUpper }: SortProductsProps) => {
-  const sortedProducts = [...products];
-  return sortedProducts.sort((a, b) =>
-    a[column] > b[column] ? (isUpper ? 1 : -1) : isUpper ? -1 : 1
+  const sortedProducts = [...products].sort((a, b) =>
+    a[column] > b[column] ? (isUpper ? -1 : 1) : isUpper ? 1 : -1
   );
+  return sortedProducts;
 };

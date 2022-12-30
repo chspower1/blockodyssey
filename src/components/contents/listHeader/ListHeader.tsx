@@ -33,8 +33,8 @@ const PRODUCT_COLUMN = [
   },
   {
     korean: "평점",
-    value: "score",
-    className: "Score",
+    value: "rating",
+    className: "rating",
   },
   {
     korean: "재고",
@@ -51,10 +51,6 @@ const ListHeader = () => {
           <SortButton column={value as ProductColumn} />
         </p>
       ))}
-      <p className={styles.Id}>
-        상품번호
-        <SortButton column="id" />
-      </p>
     </div>
   );
 };

@@ -5,7 +5,7 @@ interface ItemProps {
   brand: string;
   description: string;
   price: number;
-  score: number;
+  rating: number;
   stock: number;
 }
 
@@ -15,7 +15,7 @@ const cutDownText = (description: string) => {
   }
   return description;
 };
-const Item = ({ id, title, brand, description, price, score, stock }: ItemProps) => {
+const Item = ({ id, title, brand, description, price, rating, stock }: ItemProps) => {
   return (
     <div className={styles.Wrapper}>
       <p className={styles.Id}>{id}</p>
@@ -23,7 +23,7 @@ const Item = ({ id, title, brand, description, price, score, stock }: ItemProps)
       <p className={styles.Brand}>{brand}</p>
       <p className={styles.Description}>{cutDownText(description)}</p>
       <p className={styles.Price}>{price}</p>
-      <p className={styles.Score}>{score}</p>
+      <p className={styles.rating}>{rating}</p>
       <p className={styles.Stock}>{stock}</p>
     </div>
   );

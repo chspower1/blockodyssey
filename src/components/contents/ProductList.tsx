@@ -77,7 +77,7 @@ const ProductList = ({
             title={title}
             description={description}
             price={price}
-            score={rating}
+            rating={rating}
             stock={stock}
           />
         ))}

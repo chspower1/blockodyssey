@@ -50,15 +50,28 @@ const ProductList = ({
     // 검색 조건에 맞게 products update
     if (products) {
       const searchedProducts = searchProducts({ category, search, products: products.products! });
-      dispatch(setResultProducts({ total: searchedProducts.length, products: searchedProducts }));
+      const newTotal = searchedProducts.length;
+      const newMaxPage = newTotal ? Math.ceil(newTotal / postPerPage) : 1;
+      dispatch(setResultProducts({ total: newTotal, products: searchedProducts }));
       setPage((prev) => ({
         ...prev,
-        maxPage: searchedProducts.length ? Math.ceil(searchedProducts.length / postPerPage) : 1,
+        maxPage: newMaxPage,
       }));
-      console.log(searchedProducts);
     }
   }, [search, category, products, postPerPage, isNew]);
-
+  useEffect(() => {
+    if (currentPage > maxPage) {
+      setPage((prev) => ({ ...prev, currentPage: maxPage }));
+      if (maxLimitPage > maxPage) {
+        setPage((prev) => ({
+          ...prev,
+          pageSection: Math.ceil(maxPage / 5),
+          maxLimitPage: Math.ceil(maxPage / 5) * 5,
+          minLimitPage: Math.ceil(maxPage / 5) * 5 - 4,
+        }));
+      }
+    }
+  }, [maxPage]);
   return (
     <div className={`Flex ${styles.Wrapper}`}>
       <div className={`${styles.List}`}>

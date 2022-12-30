@@ -30,7 +30,6 @@ const usePagination = () => {
 
   const handleChangePostPerPage = (postPerPage: number) => {
     setPage((prev) => ({ ...prev, postPerPage }));
-
     console.log(page);
   };
 
@@ -62,7 +61,12 @@ const usePagination = () => {
   useEffect(() => {
     setSessionPostPerPage(page.postPerPage);
   }, [page.postPerPage, setSessionPostPerPage]);
-
+  useEffect(() => {
+    console.log("현재페이지 변경");
+    if (page.currentPage > page.maxLimitPage) {
+      setPage((prev) => ({ ...prev, currentPage: page.maxLimitPage }));
+    }
+  }, [page.maxPage]);
   return {
     page,
     setPage,

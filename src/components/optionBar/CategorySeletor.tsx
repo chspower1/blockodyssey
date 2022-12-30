@@ -1,5 +1,5 @@
 import { Category } from "@type/product";
-
+import styles from "@styles/optionBar/CategorySelector.module.css";
 interface CategorySelectorProps {
   finalCategory: Category;
   setCategory: React.Dispatch<React.SetStateAction<Category>>;
@@ -13,6 +13,7 @@ const CategorySelector = ({ categories, finalCategory, setCategory }: CategorySe
   return (
     <select
       name="select"
+      className={styles.CategorySelect}
       onChange={(e) => setCategory(e.currentTarget.value as Category)}
       defaultValue={finalCategory}
     >

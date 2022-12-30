@@ -102,6 +102,7 @@ section {
 }
 body {
   line-height: 1;
+  box-sizing: border-box;
 }
 ol,
 ul {
@@ -121,4 +122,22 @@ q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+button,
+select,
+input {
+  border: none;
+  outline: none;
+}
+button {
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

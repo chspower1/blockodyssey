@@ -2,4 +2,54 @@
   width: 1700px;
   height: 730px;
   background-color: white;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.List {
+  width: 1600px;
+  height: 670px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.List::-webkit-scrollbar {
+  width: 8px; /* 스크롤바의 너비 */
+}
+.List::-webkit-scrollbar-thumb {
+  height: 10%; /* 스크롤바의 길이 */
+  background: #c2dbff; /* 스크롤바의 색상 */
+  border-radius: 10px;
+}
+.BottomBox {
+  width: 100%;
+  height: 70px;
+  position: relative;
+}
+.PagePerSelector {
+  position: absolute;
+  left: 0;
+}
+.PageButtonBox {
+  width: 330px;
+  position: relative;
+  gap: 10px;
+}
+.PageButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 0px 2px #bebebe;
+  transition: box-shadow 0.3s ease;
+}
+
+.PageButton:hover {
+  box-shadow: 0px 0px 0px 3px #5bc8ff;
+}
+.Active {
+  box-shadow: 0px 0px 0px 3px #00a4f4;
+}
+.NextButton {
+  right: -20px;
+}
+.PreviusButton {
+  left: -20px;
 }

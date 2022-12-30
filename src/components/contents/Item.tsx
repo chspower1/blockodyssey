@@ -23,7 +23,7 @@ const Item = ({ id, title, brand, description, price, rating, stock }: ItemProps
       <p className={styles.Brand}>{brand}</p>
       <p className={styles.Description}>{cutDownText(description)}</p>
       <p className={styles.Price}>{price}</p>
-      <p className={styles.rating}>{rating}</p>
+      <p className={styles.Rating}>{rating}</p>
       <p className={styles.Stock}>{stock}</p>
     </div>
   );

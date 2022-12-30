@@ -34,7 +34,7 @@ const PRODUCT_COLUMN = [
   {
     korean: "평점",
     value: "rating",
-    className: "rating",
+    className: "Rating",
   },
   {
     korean: "재고",
@@ -44,7 +44,7 @@ const PRODUCT_COLUMN = [
 ];
 const ListHeader = () => {
   return (
-    <div className={styles.Wrapper}>
+    <div className={styles.Wrapper} style={{ position: "sticky", top: "0px" }}>
       {PRODUCT_COLUMN.map(({ korean, value, className }) => (
         <p className={styles[className]}>
           {korean}

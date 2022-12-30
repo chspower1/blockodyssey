@@ -13,28 +13,3 @@
   align-items: center;
   height: 60px;
 }
-
-.Id {
-  width: 200px;
-}
-.Title {
-  width: 200px;
-}
-.Brand {
-  width: 200px;
-}
-.Description {
-  width: 610px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.Price {
-  width: 130px;
-}
-.Rating {
-  width: 130px;
-}
-.Stock {
-  width: 130px;
-}

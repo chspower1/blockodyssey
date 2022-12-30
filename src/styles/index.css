@@ -141,3 +141,9 @@ button {
   justify-content: center;
   align-items: center;
 }
+.Absolute {
+  position: absolute;
+}
+.Relative {
+  position: relative;
+}

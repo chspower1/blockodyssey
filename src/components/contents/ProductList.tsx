@@ -60,50 +60,53 @@ const ProductList = ({
   }, [search, category, products, postPerPage, isNew]);
 
   return (
-    <div className={styles.Wrapper}>
-      <div>
-        <span>{`분류 : ${category}`}</span>
-        <span>{`검색어 :${search}`}</span>
-        <span>{`상품 수 :${resultProducts.total}`}</span>
+    <div className={`Flex ${styles.Wrapper}`}>
+      <div className={`${styles.List}`}>
+        <ListHeader />
+        {resultProducts?.products
+          ?.slice(prevProductsCount, currentProductsCount)
+          .map(({ id, title, brand, description, price, rating, stock }) => (
+            <Item
+              key={id + title}
+              brand={brand}
+              id={id}
+              title={title}
+              description={description}
+              price={price}
+              rating={rating}
+              stock={stock}
+            />
+          ))}
       </div>
-      <ListHeader />
-      {resultProducts?.products
-        ?.slice(prevProductsCount, currentProductsCount)
-        .map(({ id, title, brand, description, price, rating, stock }) => (
-          <Item
-            key={id + title}
-            brand={brand}
-            id={id}
-            title={title}
-            description={description}
-            price={price}
-            rating={rating}
-            stock={stock}
-          />
-        ))}
-      <div>
-        페이지 당 행 :
-        <select onChange={(e) => handleChangePostPerPage(parseInt(e.currentTarget.value))}>
-          <option value={10}>10</option>
-          <option value={20}>20</option>
-          <option value={50}>50</option>
-        </select>
+      <div className={`Flex Relative ${styles.BottomBox}`}>
+        <div className={`${styles.PagePerSelector}`}>
+          페이지 당 행 :
+          <select onChange={(e) => handleChangePostPerPage(parseInt(e.currentTarget.value))}>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </select>
+        </div>
         {resultProducts && (
-          <div>
-            <button
-              onClick={() => handleClickPageSection({ isNext: false })}
-              disabled={pageSection === 1}
-            >
-              ⬅️
-            </button>
+          <div className={`Flex Relative ${styles.PageButtonBox}`}>
+            {pageSection !== 1 && (
+              <button
+                className={`Absolute ${styles.PageButton} ${styles.PreviusButton}`}
+                onClick={() => handleClickPageSection({ isNext: false })}
+              >
+                ⬅️
+              </button>
+            )}
             {Array.from({ length: maxPage }, (_, index) => index + 1).map(
               (page) =>
-                ((page <= maxLimitPage && page >= minLimitPage) || page === maxPage) && (
+                page <= maxLimitPage &&
+                page >= minLimitPage && (
+                  //  || page === maxPage
                   <span key={page}>
-                    {page === maxPage && maxLimitPage < maxPage && "..."}
+                    {/* {page === maxPage && maxLimitPage < maxPage && "..."} */}
                     <button
                       key={page}
-                      style={currentPage === page ? { backgroundColor: "red" } : {}}
+                      className={`${styles.PageButton} ${page === currentPage && styles.Active}`}
                       onClick={() => handleClickPageButton(page)}
                     >
                       {page}
@@ -112,6 +115,7 @@ const ProductList = ({
                 )
             )}
             <button
+              className={`Absolute ${styles.PageButton} ${styles.NextButton}`}
               onClick={() => handleClickPageSection({ isNext: true })}
               disabled={maxLimitPage >= maxPage}
             >

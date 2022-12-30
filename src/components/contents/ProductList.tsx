@@ -13,15 +13,9 @@ import { setResultProducts } from "@store/resultProductsSlice";
 import { RootState } from "@store/store";
 interface ProductListProps {
   searchOptions: SearchOptions;
-  isNew: boolean;
-  setIsNew: React.Dispatch<SetStateAction<boolean>>;
 }
 
-const ProductList = ({
-  searchOptions: { search, category },
-  isNew,
-  setIsNew,
-}: ProductListProps) => {
+const ProductList = ({ searchOptions: { search, category } }: ProductListProps) => {
   // State
   const resultProducts = useSelector((state: RootState) => state.resultProducts.value);
   const dispatch = useDispatch();
@@ -43,10 +37,9 @@ const ProductList = ({
   // When Update SearchOptions
   useEffect(() => {
     // 새로 검색 했을 때 페이지 1로 이동
-    if (isNew) {
-      setPage((prev) => ({ ...prev, currentPage: 1 }));
-      setIsNew(false);
-    }
+
+    setPage((prev) => ({ ...prev, currentPage: 1 }));
+
     // 검색 조건에 맞게 products update
     if (products) {
       const searchedProducts = searchProducts({ category, search, products: products.products! });
@@ -58,16 +51,17 @@ const ProductList = ({
         maxPage: newMaxPage,
       }));
     }
-  }, [search, category, products, postPerPage, isNew]);
+  }, [search, category, products, postPerPage]);
   useEffect(() => {
     if (currentPage > maxPage) {
       setPage((prev) => ({ ...prev, currentPage: maxPage }));
       if (maxLimitPage > maxPage) {
+        const newPageSection = Math.ceil(maxPage / 5);
         setPage((prev) => ({
           ...prev,
-          pageSection: Math.ceil(maxPage / 5),
-          maxLimitPage: Math.ceil(maxPage / 5) * 5,
-          minLimitPage: Math.ceil(maxPage / 5) * 5 - 4,
+          pageSection: newPageSection,
+          maxLimitPage: newPageSection * 5,
+          minLimitPage: newPageSection * 5 - 4,
         }));
       }
     }
@@ -76,20 +70,24 @@ const ProductList = ({
     <div className={`Flex ${styles.Wrapper}`}>
       <div className={`${styles.List}`}>
         <ListHeader />
-        {resultProducts?.products
-          ?.slice(prevProductsCount, currentProductsCount)
-          .map(({ id, title, brand, description, price, rating, stock }) => (
-            <Item
-              key={id + title}
-              brand={brand}
-              id={id}
-              title={title}
-              description={description}
-              price={price}
-              rating={rating}
-              stock={stock}
-            />
-          ))}
+        {resultProducts.products?.length !== 0 ? (
+          resultProducts.products
+            ?.slice(prevProductsCount, currentProductsCount)
+            .map(({ id, title, brand, description, price, rating, stock }) => (
+              <Item
+                key={id + title}
+                brand={brand}
+                id={id}
+                title={title}
+                description={description}
+                price={price}
+                rating={rating}
+                stock={stock}
+              />
+            ))
+        ) : (
+          <div className={`Flex ${styles.EmptyMessage}`}>검색결과가 없습니다.</div>
+        )}
       </div>
       <div className={`Flex Relative ${styles.BottomBox}`}>
         {resultProducts && (

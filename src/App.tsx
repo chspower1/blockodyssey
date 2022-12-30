@@ -7,29 +7,26 @@ import TopBar from "@components/TopBar";
 import { useSessionStorage } from "@hooks/useSessionStorage";
 
 const App = () => {
-  const [finalSearchKeyword, setFinalSearchKeyword] = useSessionStorage<string>({
-    key: "searchKeyword",
+  const [search, setSearch] = useSessionStorage<string>({
+    key: "search",
     defaultValue: "",
   });
-  const [finalCategory, setFinalCategory] = useSessionStorage<Category>({
+  const [category, setCategory] = useSessionStorage<Category>({
     key: "category",
     defaultValue: "all",
   });
-  const [isNew, setIsNew] = useState(false);
+
   return (
     <div className={styles.Wrapper}>
       <TopBar />
       <OptionBar
-        setIsNew={setIsNew}
-        finalCategory={finalCategory}
-        finalSearchKeyword={finalSearchKeyword}
-        setFinalSearchKeyword={setFinalSearchKeyword}
-        setFinalCategory={setFinalCategory}
+        category={category}
+        search={search}
+        setSearch={setSearch}
+        setCategory={setCategory}
       />
       <ProductList
-        searchOptions={{ search: finalSearchKeyword, category: finalCategory }}
-        isNew={isNew}
-        setIsNew={setIsNew}
+        searchOptions={{ search, category }}
       />
     </div>
   );

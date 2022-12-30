@@ -6,11 +6,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "@store/store";
 import SearchIcon from "@assets/search.png";
 interface OptionBarProps {
-  setIsNew: React.Dispatch<SetStateAction<boolean>>;
-  finalSearchKeyword: string;
-  finalCategory: Category;
-  setFinalSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
-  setFinalCategory: React.Dispatch<React.SetStateAction<Category>>;
+  search: string;
+  category: Category;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setCategory: React.Dispatch<React.SetStateAction<Category>>;
 }
 const SELECT_CATEGORIES = [
   {
@@ -30,35 +29,15 @@ const SELECT_CATEGORIES = [
     value: "description",
   },
 ];
-const OptionBar = ({
-  finalSearchKeyword,
-  finalCategory,
-  setFinalSearchKeyword,
-  setFinalCategory,
-  setIsNew,
-}: OptionBarProps) => {
+const OptionBar = ({ search, category, setSearch, setCategory }: OptionBarProps) => {
   // State
-  const [search, setSearch] = useState(finalSearchKeyword);
-  const [category, setCategory] = useState<Category>(finalCategory);
-  const [errorMessage, setErrorMessage] = useState<string>();
   const resultProducts = useSelector((state: RootState) => state.resultProducts.value);
 
   // handler
-  const handleSubmitSearchOptions = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!search) {
-      setErrorMessage("검색어를 입력해주세요.");
-    } else {
-      setIsNew(true);
-      setFinalSearchKeyword(search);
-      setFinalCategory(category);
-    }
-  };
 
   const handleClickResetOption = () => {
-    setIsNew(true);
-    setFinalSearchKeyword("");
-    setFinalCategory("all");
+    setSearch("");
+    setCategory("all");
   };
   return (
     <header className={`Flex ${styles.Wrapper}`}>
@@ -67,14 +46,14 @@ const OptionBar = ({
         <span>{`분류 : ${category}`}</span>
         <span>{`검색어 :${search}`}</span>
       </div>
-      <form className={`Flex ${styles.SearchForm}`} onSubmit={handleSubmitSearchOptions}>
+      <form className={`Flex ${styles.SearchForm}`}>
         <button type="button" onClick={handleClickResetOption}>
           전체 보기
         </button>
         <CategorySelector
           categories={SELECT_CATEGORIES}
           setCategory={setCategory}
-          finalCategory={finalCategory}
+          category={category}
         />
         <div className={`Flex ${styles.SearchBox}`}>
           <input

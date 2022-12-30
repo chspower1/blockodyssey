@@ -1,5 +1,6 @@
 import { Category } from "@type/product";
 import styles from "@styles/optionBar/CategorySelector.module.css";
+import { SetStateAction } from "react";
 interface CategorySelectorProps {
   category: Category;
   setCategory: React.Dispatch<React.SetStateAction<Category>>;
@@ -7,14 +8,23 @@ interface CategorySelectorProps {
     korean: string;
     value: string;
   }[];
+  setIsNew: React.Dispatch<SetStateAction<boolean>>;
 }
 
-const CategorySelector = ({ categories, category, setCategory }: CategorySelectorProps) => {
+const CategorySelector = ({
+  categories,
+  category,
+  setCategory,
+  setIsNew,
+}: CategorySelectorProps) => {
   return (
     <select
       name="select"
       className={styles.CategorySelect}
-      onChange={(e) => setCategory(e.currentTarget.value as Category)}
+      onChange={(e) => {
+        setIsNew(true);
+        setCategory(e.currentTarget.value as Category);
+      }}
       value={category}
     >
       {categories.map((category) => (

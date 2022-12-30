@@ -9,6 +9,7 @@ interface OptionBarProps {
   category: Category;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   setCategory: React.Dispatch<React.SetStateAction<Category>>;
+  setIsNew: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const SELECT_CATEGORIES = [
   {
@@ -28,7 +29,7 @@ const SELECT_CATEGORIES = [
     value: "description",
   },
 ];
-const OptionBar = ({ search, category, setSearch, setCategory }: OptionBarProps) => {
+const OptionBar = ({ search, category, setSearch, setCategory, setIsNew }: OptionBarProps) => {
   // State
   const resultProducts = useSelector((state: RootState) => state.resultProducts.value);
 
@@ -52,6 +53,7 @@ const OptionBar = ({ search, category, setSearch, setCategory }: OptionBarProps)
           categories={SELECT_CATEGORIES}
           setCategory={setCategory}
           category={category}
+          setIsNew={setIsNew}
         />
         <div className={`Flex ${styles.SearchBox}`}>
           <input
@@ -59,7 +61,10 @@ const OptionBar = ({ search, category, setSearch, setCategory }: OptionBarProps)
             type="text"
             value={search}
             placeholder="검색어를 입력해주세요!"
-            onChange={(e) => setSearch(e.currentTarget.value)}
+            onChange={(e) => {
+              setIsNew(true);
+              setSearch(e.currentTarget.value);
+            }}
           />
           <button type="button" className={styles.SearchButton}>
             <img src={SearchIcon} alt="검색" />

@@ -13,9 +13,15 @@ import { setResultProducts } from "@store/resultProductsSlice";
 import { RootState } from "@store/store";
 interface ProductListProps {
   searchOptions: SearchOptions;
+  isNew: boolean;
+  setIsNew: React.Dispatch<SetStateAction<boolean>>;
 }
 
-const ProductList = ({ searchOptions: { search, category } }: ProductListProps) => {
+const ProductList = ({
+  searchOptions: { search, category },
+  isNew,
+  setIsNew,
+}: ProductListProps) => {
   // State
   const resultProducts = useSelector((state: RootState) => state.resultProducts.value);
   const dispatch = useDispatch();
@@ -37,8 +43,10 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
   // When Update SearchOptions
   useEffect(() => {
     // 새로 검색 했을 때 페이지 1로 이동
-
-    setPage((prev) => ({ ...prev, currentPage: 1 }));
+    if (isNew) {
+      setPage((prev) => ({ ...prev, currentPage: 1 }));
+      setIsNew(false);
+    }
 
     // 검색 조건에 맞게 products update
     if (products) {

@@ -28,7 +28,7 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
 
   // 검색조건,키워드 변경시
   useEffect(() => {
-    setPage((prev) => ({ ...prev, currentPage: 1 }));
+    // setPage((prev) => ({ ...prev, currentPage: 1 }));
     if (products) {
       const searchedProducts = searchProducts({ category, search, products: products.products! });
       setResultProducts({ total: searchedProducts.length, products: searchedProducts });

@@ -46,7 +46,7 @@ const ListHeader = () => {
   return (
     <div className={`Flex ${styles.Wrapper}`} style={{ position: "sticky", top: "0px" }}>
       {PRODUCT_COLUMN.map(({ korean, value, className }) => (
-        <p className={`Flex ${styles[className]}`}>
+        <p key={value} className={`Flex ${styles[className]}`}>
           <div className="Relative Flex">
             {korean}
             <SortButton column={value as ProductColumn} />

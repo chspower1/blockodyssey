@@ -8,16 +8,20 @@ const usePagination = () => {
     key: "currentPage",
     defaultValue: 1,
   });
+  const [sessionPostPerPage, setSessionPostPerPage] = useSessionStorage<number>({
+    key: "postPerPage",
+    defaultValue: 10,
+  });
   const [page, setPage] = useState({
-    postPerPage: 10,
+    postPerPage: sessionPostPerPage,
     currentPage: sessionCurrentPage,
     pageSection: Math.ceil(sessionCurrentPage / 5),
     maxPage: 1,
     maxLimitPage: Math.ceil(sessionCurrentPage / 5) * 5,
     minLimitPage: Math.ceil(sessionCurrentPage / 5) * 5 - 4,
   });
-  const prevProductsCount = page.postPerPage * (page.currentPage - 1);
-  const currentProductsCount = page.postPerPage * page.currentPage;
+  const prevProductsCount = sessionPostPerPage * (page.currentPage - 1);
+  const currentProductsCount = sessionPostPerPage * page.currentPage;
 
   // handler
   const handleClickPageButton = (page: number) => {
@@ -54,7 +58,10 @@ const usePagination = () => {
   // When update currentPage
   useEffect(() => {
     setSessionCurrentPage(page.currentPage);
-  }, [page.currentPage]);
+  }, [page.currentPage, setSessionCurrentPage]);
+  useEffect(() => {
+    setSessionPostPerPage(page.postPerPage);
+  }, [page.postPerPage, setSessionPostPerPage]);
 
   return {
     page,

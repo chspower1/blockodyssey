@@ -20,7 +20,7 @@ const SortButton = ({ column }: SortButtonProps) => {
   return (
     <button
       className="Absolute"
-      style={{ right: -30 }}
+      style={{ right: -25 }}
       type="button"
       onClick={handleClickSortButton}
     >

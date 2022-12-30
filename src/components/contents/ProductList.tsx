@@ -79,24 +79,43 @@ const ProductList = ({
           ))}
       </div>
       <div className={`Flex Relative ${styles.BottomBox}`}>
-        <div className={`${styles.PagePerSelector}`}>
-          페이지 당 행 :
-          <select onChange={(e) => handleChangePostPerPage(parseInt(e.currentTarget.value))}>
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-            <option value={50}>50</option>
-          </select>
-        </div>
         {resultProducts && (
           <div className={`Flex Relative ${styles.PageButtonBox}`}>
-            {pageSection !== 1 && (
-              <button
-                className={`Absolute ${styles.PageButton} ${styles.PreviusButton}`}
-                onClick={() => handleClickPageSection({ isNext: false })}
+            <div className={`Absolute ${styles.PostPerPageSelectBox}`}>
+              <select
+                className={styles.PostPerPageSelect}
+                onChange={(e) => handleChangePostPerPage(parseInt(e.currentTarget.value))}
+                defaultValue={postPerPage}
               >
-                ⬅️
-              </button>
-            )}
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={50}>50</option>
+              </select>
+              개씩 보기!
+            </div>
+            <button
+              className={`Absolute ${styles.Button} ${styles.PreviusButton} ${
+                pageSection !== 1 && styles.PageButton
+              }`}
+              onClick={() => handleClickPageSection({ isNext: false })}
+              disabled={pageSection === 1}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 19.5L8.25 12l7.5-7.5"
+                />
+              </svg>
+            </button>
+
             {Array.from({ length: maxPage }, (_, index) => index + 1).map(
               (page) =>
                 page <= maxLimitPage &&
@@ -106,7 +125,9 @@ const ProductList = ({
                     {/* {page === maxPage && maxLimitPage < maxPage && "..."} */}
                     <button
                       key={page}
-                      className={`${styles.PageButton} ${page === currentPage && styles.Active}`}
+                      className={`${styles.Button} ${styles.PageButton} ${
+                        page === currentPage && styles.Active
+                      }`}
                       onClick={() => handleClickPageButton(page)}
                     >
                       {page}
@@ -115,11 +136,22 @@ const ProductList = ({
                 )
             )}
             <button
-              className={`Absolute ${styles.PageButton} ${styles.NextButton}`}
+              className={`Absolute ${styles.Button} ${styles.NextButton} ${
+                maxLimitPage < maxPage && styles.PageButton
+              }`}
               onClick={() => handleClickPageSection({ isNext: true })}
               disabled={maxLimitPage >= maxPage}
             >
-              ➡️
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
             </button>
           </div>
         )}

@@ -22,28 +22,34 @@
 .BottomBox {
   width: 100%;
   height: 70px;
-  position: relative;
 }
-.PagePerSelector {
-  position: absolute;
-  left: 0;
+.PostPerPageSelectBox {
+  left: -200px;
+}
+.PostPerPageSelect {
+  padding: 3px 10px;
+  box-shadow: 0px 0px 0px 2px #b7b7b7;
+  margin-right: 10px;
+  transition: box-shadow 0.3s ease;
+}
+.PostPerPageSelect:focus {
+  box-shadow: 0px 0px 0px 2px #00a4f4;
 }
 .PageButtonBox {
   width: 330px;
-  position: relative;
   gap: 10px;
 }
-.PageButton {
+.Button {
   width: 40px;
   height: 40px;
   border-radius: 5px;
   box-shadow: 0px 0px 0px 2px #bebebe;
   transition: box-shadow 0.3s ease;
 }
-
-.PageButton:hover {
-  box-shadow: 0px 0px 0px 3px #5bc8ff;
+.PageButton {
+  transition: box-shadow 0.3s ease;
 }
+
 .Active {
   box-shadow: 0px 0px 0px 3px #00a4f4;
 }
@@ -52,4 +58,7 @@
 }
 .PreviusButton {
   left: -20px;
+}
+.PageButton:hover {
+  box-shadow: 0px 0px 0px 3px #5bc8ff;
 }

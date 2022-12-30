@@ -15,17 +15,22 @@ const App = () => {
     key: "category",
     defaultValue: "all",
   });
-
+  const [isNew, setIsNew] = useState(false);
   return (
     <div className={styles.Wrapper}>
       <TopBar />
       <OptionBar
+        setIsNew={setIsNew}
         finalCategory={finalCategory}
         finalSearchKeyword={finalSearchKeyword}
         setFinalSearchKeyword={setFinalSearchKeyword}
         setFinalCategory={setFinalCategory}
       />
-      <ProductList searchOptions={{ search: finalSearchKeyword, category: finalCategory }} />
+      <ProductList
+        searchOptions={{ search: finalSearchKeyword, category: finalCategory }}
+        isNew={isNew}
+        setIsNew={setIsNew}
+      />
     </div>
   );
 };

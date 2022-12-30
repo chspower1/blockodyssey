@@ -3,7 +3,7 @@ import ListHeader from "./ListHeader";
 import type { Category, ResponseProducts, ResultProducts, SearchOptions } from "@type/product";
 import { getProducts } from "@api/product";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { useEffect } from "react";
 import styles from "@styles/contents/ProductList.module.css";
 import { searchProducts } from "@utils/searchProducts";
@@ -11,8 +11,14 @@ import usePagination from "@hooks/usePagination";
 import { useSessionStorage } from "@hooks/useSessionStorage";
 interface ProductListProps {
   searchOptions: SearchOptions;
+  isNew: boolean;
+  setIsNew: React.Dispatch<SetStateAction<boolean>>;
 }
-const ProductList = ({ searchOptions: { search, category } }: ProductListProps) => {
+const ProductList = ({
+  searchOptions: { search, category },
+  isNew,
+  setIsNew,
+}: ProductListProps) => {
   const [resultProducts, setResultProducts] = useState<ResultProducts>();
   const {
     page: { currentPage, maxPage, pageSection, postPerPage, maxLimitPage, minLimitPage },
@@ -28,7 +34,10 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
 
   // 검색조건,키워드 변경시
   useEffect(() => {
-    // setPage((prev) => ({ ...prev, currentPage: 1 }));
+    if (isNew) {
+      setPage((prev) => ({ ...prev, currentPage: 1 }));
+      setIsNew(false);
+    }
     if (products) {
       const searchedProducts = searchProducts({ category, search, products: products.products! });
       setResultProducts({ total: searchedProducts.length, products: searchedProducts });
@@ -38,7 +47,7 @@ const ProductList = ({ searchOptions: { search, category } }: ProductListProps) 
       }));
       console.log(searchedProducts);
     }
-  }, [search, category, products, postPerPage]);
+  }, [search, category, products, postPerPage, isNew]);
 
   return (
     <div className={styles.Wrapper}>

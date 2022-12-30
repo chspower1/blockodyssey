@@ -1,8 +1,10 @@
 import { Category, SearchOptions } from "@type/product";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import styles from "@styles/OptionBar.module.css";
 import CategorySelector from "./CategorySeletor";
+import usePagination from "@hooks/usePagination";
 interface OptionBarProps {
+  setIsNew: React.Dispatch<SetStateAction<boolean>>;
   finalSearchKeyword: string;
   finalCategory: Category;
   setFinalSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
@@ -14,6 +16,7 @@ const OptionBar = ({
   finalCategory,
   setFinalSearchKeyword,
   setFinalCategory,
+  setIsNew,
 }: OptionBarProps) => {
   const CATEGORIES = [
     {
@@ -35,9 +38,9 @@ const OptionBar = ({
   ];
   const [search, setSearch] = useState(finalSearchKeyword);
   const [category, setCategory] = useState<Category>(finalCategory);
-
   const handleSubmitSearchOptions = (e: React.FormEvent) => {
     e.preventDefault();
+    setIsNew(true);
     setFinalSearchKeyword(search);
     setFinalCategory(category);
   };

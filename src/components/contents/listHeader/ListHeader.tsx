@@ -1,7 +1,7 @@
-import styles from "@styles/contents/Item.module.css";
 import { ProductColumn, ResultProducts } from "@type/product";
 import { SetStateAction } from "react";
 import SortButton from "./SortButton";
+import styles from "@styles/contents/listHeader/ListHeader.module.css";
 interface ListHeaderProps {
   setResultProducts: React.Dispatch<SetStateAction<ResultProducts | undefined>>;
 }
@@ -44,11 +44,13 @@ const PRODUCT_COLUMN = [
 ];
 const ListHeader = () => {
   return (
-    <div className={styles.Wrapper} style={{ position: "sticky", top: "0px" }}>
+    <div className={`Flex ${styles.Wrapper}`} style={{ position: "sticky", top: "0px" }}>
       {PRODUCT_COLUMN.map(({ korean, value, className }) => (
-        <p className={styles[className]}>
-          {korean}
-          <SortButton column={value as ProductColumn} />
+        <p className={`Flex ${styles[className]}`}>
+          <div className="Relative Flex">
+            {korean}
+            <SortButton column={value as ProductColumn} />
+          </div>
         </p>
       ))}
     </div>

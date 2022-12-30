@@ -1,0 +1,10 @@
+.SortIcon {
+  cursor: pointer;
+  fill: #0d0e10;
+}
+path {
+  transition: all 0.3s ease;
+}
+.SortIcon:hover > path {
+  fill: #00a4f4;
+}

@@ -7,14 +7,16 @@ const usePagination = () => {
     key: "currentPage",
     defaultValue: 1,
   });
+  console.log("sessionCurrentPage", sessionCurrentPage);
   const [page, setPage] = useState({
     postPerPage: 10,
     currentPage: sessionCurrentPage,
-    pageSection: 1,
+    pageSection: Math.ceil(sessionCurrentPage / 5),
     maxPage: 1,
-    maxLimitPage: 5,
-    minLimitPage: 1,
+    maxLimitPage: Math.ceil(sessionCurrentPage / 5) * 5,
+    minLimitPage: Math.ceil(sessionCurrentPage / 5) * 5 - 4,
   });
+  console.log("pageSection", page.pageSection);
 
   const prevProductsCount = page.postPerPage * (page.currentPage - 1);
   const currentProductsCount = page.postPerPage * page.currentPage;
@@ -52,14 +54,6 @@ const usePagination = () => {
       minLimitPage: prev.pageSection * 5 - 4,
     }));
   };
-
-  // useEffect(() => {
-  //   if (page.currentPage > page.maxLimitPage) {
-  //     setPage((prev) => ({ ...prev, currentPage: page.maxLimitPage }));
-  //   } else if (page.currentPage < page.maxLimitPage) {
-  //     setPage((prev) => ({ ...prev, currentPage: page.minLimitPage }));
-  //   }
-  // }, [page.pageSection]);
 
   useEffect(() => {
     console.log("currentSession 변경");

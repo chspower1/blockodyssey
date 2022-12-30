@@ -36,17 +36,29 @@ const usePagination = () => {
   };
 
   const handleClickPageSection = (type: "next" | "prev" | "end" | "start") => {
-    if (type === "next" || (type === "end" && page.maxLimitPage <= page.maxPage)) {
+    if (type === "next" && page.maxLimitPage <= page.maxPage) {
       setPage((prev) => ({
         ...prev,
         pageSection: prev.pageSection + 1,
-        currentPage: type === "end" ? page.maxPage : (prev.pageSection + 1) * 5 - 4,
+        currentPage: (prev.pageSection + 1) * 5 - 4,
       }));
-    } else if ((type === "prev" || type === "start") && page.pageSection !== 1) {
+    } else if (type === "prev" && page.pageSection !== 1) {
       setPage((prev) => ({
         ...prev,
         pageSection: prev.pageSection - 1,
-        currentPage: type === "start" ? 1 : (prev.pageSection - 1) * 5,
+        currentPage: (prev.pageSection - 1) * 5,
+      }));
+    } else if (type === "end") {
+      setPage((prev) => ({
+        ...prev,
+        pageSection: Math.ceil(page.maxPage / 5),
+        currentPage: page.maxPage,
+      }));
+    } else if (type === "start") {
+      setPage((prev) => ({
+        ...prev,
+        pageSection: 1,
+        currentPage: 1,
       }));
     }
     setPage((prev) => ({

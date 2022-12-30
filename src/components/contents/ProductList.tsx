@@ -199,7 +199,7 @@ const ProductList = ({
                 maxLimitPage < maxPage && styles.PageButton
               }`}
               onClick={() => handleClickPageSection("end")}
-              disabled={maxLimitPage >= maxPage}
+              disabled={currentPage === maxPage}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

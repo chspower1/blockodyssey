@@ -4,7 +4,7 @@ const SkeletonItem = () => {
   return (
     <div className={styles.Wrapper}>
       {PRODUCT_COLUMN.map(({ className }) => (
-        <p className={`Flex ${styles[className]}`}>
+        <p key={className} className={`Flex ${styles[className]}`}>
           <span className={styles.Skeleton} />
         </p>
       ))}

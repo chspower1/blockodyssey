@@ -21,7 +21,7 @@ const Item = (props: ItemProps) => {
   return (
     <div className={`${styles.Wrapper}`}>
       {PRODUCT_COLUMN.map(({ value, className }) => (
-        <p className={`Flex ${styles[className]}`}>
+        <p key={value} className={`Flex ${styles[className]}`}>
           {value === "description" ? cutDownText(props[value]) : props[value as ProductColumn]}
         </p>
       ))}

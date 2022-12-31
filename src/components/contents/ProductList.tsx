@@ -11,7 +11,7 @@ import usePagination from "@hooks/usePagination";
 import { useDispatch, useSelector } from "react-redux";
 import { setResultProducts } from "@store/resultProductsSlice";
 import { RootState } from "@store/store";
-import Skeleton from "@components/SkeletonItem";
+import Skeleton from "@components/contents/SkeletonItem";
 interface ProductListProps {
   searchOptions: SearchOptions;
   isNew: boolean;
@@ -117,7 +117,7 @@ const ProductList = ({
             </div>
             <button
               className={`Absolute ${styles.Button} ${styles.StartPageButton} ${
-                pageSection !== 1 && styles.PageButton
+                currentPage !== 1 && styles.PageButton
               }`}
               onClick={() => handleClickPageSection("start")}
               disabled={currentPage === 1}
@@ -199,7 +199,7 @@ const ProductList = ({
             </button>
             <button
               className={`Absolute ${styles.Button} ${styles.EndPageButton} ${
-                maxLimitPage < maxPage && styles.PageButton
+                currentPage !== maxPage && styles.PageButton
               }`}
               onClick={() => handleClickPageSection("end")}
               disabled={currentPage === maxPage}

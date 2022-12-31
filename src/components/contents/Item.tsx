@@ -18,13 +18,13 @@ const cutDownText = (description: string) => {
 const Item = ({ id, title, brand, description, price, rating, stock }: ItemProps) => {
   return (
     <div className={`${styles.Wrapper}`}>
-      <p className={styles.Id}>{id}</p>
-      <p className={styles.Title}>{title}</p>
-      <p className={styles.Brand}>{brand}</p>
-      <p className={styles.Description}>{cutDownText(description)}</p>
-      <p className={styles.Price}>{price}</p>
-      <p className={styles.Rating}>{rating}</p>
-      <p className={styles.Stock}>{stock}</p>
+      <p className={`Flex ${styles.Id}`}>{id}</p>
+      <p className={`Flex ${styles.Title}`}>{title}</p>
+      <p className={`Flex ${styles.Brand}`}>{brand}</p>
+      <p className={`Flex ${styles.Description}`}>{cutDownText(description)}</p>
+      <p className={`Flex ${styles.Price}`}>{price}</p>
+      <p className={`Flex ${styles.Rating}`}>{rating}</p>
+      <p className={`Flex ${styles.Stock}`}>{stock}</p>
     </div>
   );
 };

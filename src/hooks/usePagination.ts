@@ -18,7 +18,7 @@ const usePagination = () => {
     postPerPage: sessionPostPerPage,
     currentPage: sessionCurrentPage,
     pageSection: Math.ceil(sessionCurrentPage / 5),
-    maxPage: 1,
+    maxPage: 5,
     maxLimitPage: Math.ceil(sessionCurrentPage / 5) * 5,
     minLimitPage: Math.ceil(sessionCurrentPage / 5) * 5 - 4,
   });

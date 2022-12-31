@@ -11,6 +11,7 @@ import usePagination from "@hooks/usePagination";
 import { useDispatch, useSelector } from "react-redux";
 import { setResultProducts } from "@store/resultProductsSlice";
 import { RootState } from "@store/store";
+import Skeleton from "@components/SkeletonItem";
 interface ProductListProps {
   searchOptions: SearchOptions;
   isNew: boolean;
@@ -38,7 +39,7 @@ const ProductList = ({
   } = usePagination();
 
   // Fetching Products Data
-  const { data: products } = useQuery<ResponseProducts>(["products"], getProducts);
+  const { data: products, isLoading } = useQuery<ResponseProducts>(["products"], getProducts);
 
   // When Update SearchOptions
   useEffect(() => {
@@ -78,7 +79,9 @@ const ProductList = ({
     <div className={`Flex ${styles.Wrapper}`}>
       <div className={`${styles.List}`}>
         <ListHeader />
-        {resultProducts.products?.length !== 0 ? (
+        {isLoading ? (
+          Array.from({ length: 10 }).map((_, index) => <Skeleton index={index} />)
+        ) : resultProducts.products?.length !== 0 ? (
           resultProducts.products
             ?.slice(prevProductsCount, currentProductsCount)
             .map(({ id, title, brand, description, price, rating, stock }) => (

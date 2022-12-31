@@ -1,12 +1,15 @@
 import ProductList from "@components/contents/ProductList";
 import OptionBar from "@components/optionBar/OptionBar";
-import { useEffect, useState } from "react";
-import { Category, SearchOptions } from "./type/product";
-import styles from "@styles/App.module.css";
+import { useState } from "react";
 import TopBar from "@components/TopBar";
 import { useSessionStorage } from "@hooks/useSessionStorage";
+// type
+import type { Category } from "./type/product";
+// css
+import styles from "@styles/App.module.css";
 
 const App = () => {
+  // state
   const [search, setSearch] = useSessionStorage<string>({
     key: "search",
     defaultValue: "",
@@ -16,6 +19,8 @@ const App = () => {
     defaultValue: "all",
   });
   const [isNew, setIsNew] = useState(false);
+
+  // jsx
   return (
     <div className={styles.Wrapper}>
       <TopBar />

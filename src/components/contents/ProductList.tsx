@@ -1,17 +1,20 @@
 import Item from "./Item";
 import ListHeader from "./listHeader/ListHeader";
-import type { Category, ResponseProducts, ResultProducts, SearchOptions } from "@type/product";
 import { getProducts } from "@api/product";
 import { useQuery } from "@tanstack/react-query";
-import { SetStateAction, useState } from "react";
+import { SetStateAction } from "react";
 import { useEffect } from "react";
-import styles from "@styles/contents/ProductList.module.css";
 import { searchProducts } from "@utils/searchProducts";
 import usePagination from "@hooks/usePagination";
 import { useDispatch, useSelector } from "react-redux";
 import { setResultProducts } from "@store/resultProductsSlice";
 import { RootState } from "@store/store";
 import Skeleton from "@components/contents/SkeletonItem";
+// type
+import type { ResponseProducts, SearchOptions } from "@type/product";
+// css
+import styles from "@styles/contents/ProductList.module.css";
+
 interface ProductListProps {
   searchOptions: SearchOptions;
   isNew: boolean;
@@ -43,13 +46,12 @@ const ProductList = ({
 
   // When Update SearchOptions
   useEffect(() => {
-    // 새로 검색 했을 때 페이지 1로 이동
+    // When search new keyword,category
     if (isNew) {
       setPage((prev) => ({ ...prev, currentPage: 1 }));
       setIsNew(false);
     }
 
-    // 검색 조건에 맞게 products update
     if (products) {
       const searchedProducts = searchProducts({ category, search, products: products.products! });
       const newTotal = searchedProducts.length;
@@ -61,6 +63,8 @@ const ProductList = ({
       }));
     }
   }, [search, category, products, postPerPage]);
+
+  // Update limitPage When change maxPage
   useEffect(() => {
     if (currentPage > maxPage) {
       setPage((prev) => ({ ...prev, currentPage: maxPage }));
@@ -75,12 +79,13 @@ const ProductList = ({
       }
     }
   }, [maxPage]);
+
   return (
     <div className={`Flex ${styles.Wrapper}`}>
       <div className={`${styles.List}`}>
         <ListHeader />
         {isLoading ? (
-          Array.from({ length: 10 }).map((_, index) => <Skeleton index={index} />)
+          Array.from({ length: 10 }).map((_, index) => <Skeleton key={index} />)
         ) : resultProducts.products?.length !== 0 ? (
           resultProducts.products
             ?.slice(prevProductsCount, currentProductsCount)
@@ -159,7 +164,6 @@ const ProductList = ({
                 />
               </svg>
             </button>
-
             {Array.from({ length: maxPage }, (_, index) => index + 1).map(
               (page) =>
                 page <= maxLimitPage &&
@@ -221,6 +225,9 @@ const ProductList = ({
             </button>
           </div>
         )}
+        <div style={{ position: "absolute", bottom: "20px", right: "20px" }}>
+          현재 페이지 {currentPage} / {maxPage}
+        </div>
       </div>
     </div>
   );

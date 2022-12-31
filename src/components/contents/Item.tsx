@@ -1,4 +1,6 @@
+import { PRODUCT_COLUMN } from "@constant/productColumn";
 import styles from "@styles/contents/Item.module.css";
+import { ProductColumn } from "@type/product";
 interface ItemProps {
   id: number;
   title: string;
@@ -15,16 +17,14 @@ const cutDownText = (description: string) => {
   }
   return description;
 };
-const Item = ({ id, title, brand, description, price, rating, stock }: ItemProps) => {
+const Item = (props: ItemProps) => {
   return (
     <div className={`${styles.Wrapper}`}>
-      <p className={`Flex ${styles.Id}`}>{id}</p>
-      <p className={`Flex ${styles.Title}`}>{title}</p>
-      <p className={`Flex ${styles.Brand}`}>{brand}</p>
-      <p className={`Flex ${styles.Description}`}>{cutDownText(description)}</p>
-      <p className={`Flex ${styles.Price}`}>{price}</p>
-      <p className={`Flex ${styles.Rating}`}>{rating}</p>
-      <p className={`Flex ${styles.Stock}`}>{stock}</p>
+      {PRODUCT_COLUMN.map(({ value, className }) => (
+        <p className={`Flex ${styles[className]}`}>
+          {value === "description" ? cutDownText(props[value]) : props[value as ProductColumn]}
+        </p>
+      ))}
     </div>
   );
 };

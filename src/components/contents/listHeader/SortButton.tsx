@@ -1,22 +1,28 @@
 import { setResultProducts } from "@store/resultProductsSlice";
 import { RootState } from "@store/store";
-import { ProductColumn } from "@type/product";
 import { sortProducts } from "@utils/sortProduct";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+// type
+import { ProductColumn } from "@type/product";
+// css
 import styles from "@styles/contents/listHeader/SortButton.module.css";
 interface SortButtonProps {
   column: ProductColumn;
 }
 const SortButton = ({ column }: SortButtonProps) => {
+  // state
   const resultProducts = useSelector((state: RootState) => state.resultProducts.value);
   const dispatch = useDispatch();
   const [isUpper, setIsUpper] = useState(true);
+
+  // handler
   const handleClickSortButton = () => {
     const sortedProducts = sortProducts({ products: resultProducts.products!, column, isUpper });
     dispatch(setResultProducts({ total: resultProducts.total, products: sortedProducts }));
     setIsUpper((prev) => !prev);
   };
+
   return (
     <button
       className="Absolute"

@@ -12,6 +12,7 @@ const queryClient = new QueryClient({
     queries: {
       cacheTime: 1000 * 60 * 5,
       staleTime: 1000 * 60 * 5,
+      retry: false,
     },
   },
 });

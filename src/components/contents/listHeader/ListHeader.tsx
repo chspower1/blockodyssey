@@ -1,10 +1,7 @@
-import { ProductColumn, ResultProducts } from "@type/product";
-import { SetStateAction } from "react";
+import { ProductColumn } from "@type/product";
 import SortButton from "./SortButton";
 import styles from "@styles/contents/listHeader/ListHeader.module.css";
-interface ListHeaderProps {
-  setResultProducts: React.Dispatch<SetStateAction<ResultProducts | undefined>>;
-}
+
 const PRODUCT_COLUMN = [
   {
     korean: "상품번호",

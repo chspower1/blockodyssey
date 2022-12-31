@@ -1,9 +1,5 @@
-import { Product } from "@type/product";
 import { useEffect, useState } from "react";
 import { useSessionStorage } from "./useSessionStorage";
-interface HandleClickPageSectionProps {
-  type: "next" | "prev" | "end" | "start";
-}
 const usePagination = () => {
   // State
   const [sessionCurrentPage, setSessionCurrentPage] = useSessionStorage<number>({
@@ -32,7 +28,6 @@ const usePagination = () => {
 
   const handleChangePostPerPage = (postPerPage: number) => {
     setPage((prev) => ({ ...prev, postPerPage }));
-    console.log(page);
   };
 
   const handleClickPageSection = (type: "next" | "prev" | "end" | "start") => {
